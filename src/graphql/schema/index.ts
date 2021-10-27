@@ -30,20 +30,22 @@ export default buildSchema(`
         dislikes: Int!
         banner: String!
         comments: [Comment!]!
+        slug: String!
+        author: Author!
     }
 
     type Comment {
         id: ID!
         name: String!
         comment: Date!
-        replies: [Comment!]
+        replies: [Comment!]!
     }
 
     type Author {
         id: ID!
         name: String!
         email: String!
-        date: Date!
+        date: Date
         about: String!
         avatar: String!
     }
@@ -51,34 +53,55 @@ export default buildSchema(`
     input BlogPostInput {
         title: String!
         content: String!
-        date: Date!
+        date: Date
         banner: String!
+        author: String!
+    }
+
+    input BlogPostUpdate {
+        title: String
+        content: String
+        date: Date
+        banner: String
+        likes: Int
+        dislikes: Int
     }
 
     input CommentInput {
         name: String!
         comment: String!
-        blogPostId: ID!
+        blog: ID!
+    }
+
+    input CommentReply {
+        name: String!
+        comment: String!
+        parentComment: ID!
     }
 
     input AuthorInput {
         name: String!
         email: String!
-        date: Date!
+        date: Date
         about: String!
         avatar: String
     }
+    
 
     type Query {
-        blogPosts: [BlogPost!]!
-        blogPost(id: ID!): BlogPost!
+        blogs: [BlogPost!]!
+        blog(id: ID, slug: String): BlogPost
         authors: [Author!]!
-        author(id: ID!): Author!
+        author(id: ID!): Author
     }
 
     type Mutation {
-        createBlogPost(input: BlogPostInput): BlogPost!
+        createBlog(input: BlogPostInput): BlogPost!
+        updateBlog(id: ID!, input: BlogPostUpdate!): BlogPost!
+        deleteBlog(id: ID!): BlogPost!
         createComment(input: CommentInput): Comment!
+        replyComment(input: CommentReply): Comment!
+        deleteComment(id: ID!): Comment!
         createAuthor(input: AuthorInput): Author!
     }
 
