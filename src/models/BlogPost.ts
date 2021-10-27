@@ -9,7 +9,7 @@ import mongoose, {
 import { IComment } from "./PostComment";
 import { IDocument } from "src/interfaces/db_interfaces";
 
-interface IBlog extends Document, IDocument<IBlog> {
+export interface IBlog extends Document, IDocument<IBlog> {
 	title: string;
 	content: string;
 	date: SchemaDefinitionProperty<Date>;
@@ -18,6 +18,7 @@ interface IBlog extends Document, IDocument<IBlog> {
 	likes: number;
 	dislikes: number;
 	banner: string;
+	slug: string;
 }
 
 const BlogSchema = new Schema<IBlog>({
@@ -31,7 +32,7 @@ const BlogSchema = new Schema<IBlog>({
 	},
 	date: {
 		type: Date,
-		required: true,
+		default: Date.now,
 	},
 	author: {
 		type: Schema.Types.ObjectId,
@@ -56,6 +57,11 @@ const BlogSchema = new Schema<IBlog>({
 	banner: {
 		type: String,
 		required: false,
+	},
+	slug: {
+		type: String,
+		required: true,
+		unique: true,
 	},
 });
 
