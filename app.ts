@@ -4,12 +4,12 @@ import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import graphqlSchema from "./src/graphql/schema";
 import { authors, createAuthor } from "./src/graphql/resolvers";
-require("dotenv").config({
-	path: `./.env`,
-});
+import path from "path";
+
+require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
 
 const app: express.Application = express();
-const env = Env();
+const env = Env(process.env);
 
 app.use(
 	"/graphql",
@@ -31,9 +31,7 @@ app.listen(3000, () => {
 	console.log("Example app listening on port 3000!");
 
 	mongoose
-		.connect(
-			"mongodb+srv://doadmin:gx5c091V2fX4o8Z3@graphql-blog-a5c5f5e2.mongo.ondigitalocean.com/admin?retryWrites=true&w=majority"
-		)
+		.connect(env.production.databaseURI)
 		.then(() => {
 			console.log("CONNECTED TO DATABASE SUCCESSFULLY!");
 		})
