@@ -1,3 +1,4 @@
+import { imageUpload } from "../../util/upload";
 import Author from "../../models/Author";
 
 export const authors = async () => {
@@ -6,28 +7,29 @@ export const authors = async () => {
 	return authors.map((author) => {
 		return {
 			...author._doc,
-			_id: author.id,
-			createdAt: new Date(author._doc.createdAt).toISOString(),
+			id: author.id,
 		};
 	});
 };
 
 export const createAuthor = async (args) => {
 	const { name, email, date, about, avatar } = args.input;
+	const location = avatar
+		? await imageUpload(avatar, `authors/${email}`)
+		: "https://apollo-blog-server.sfo3.digitaloceanspaces.com/authors/avatar.png";
 
 	const author = new Author({
 		name,
 		email,
 		date,
 		about,
-		avatar,
+		avatar: location,
 	});
 
 	const result = await author.save();
 
 	return {
 		...result._doc,
-		_id: result.id,
-		createdAt: new Date(result._doc.createdAt).toISOString(),
+		id: result.id,
 	};
 };
