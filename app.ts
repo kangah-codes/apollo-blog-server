@@ -3,8 +3,20 @@ import mongoose from "mongoose";
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import graphqlSchema from "./src/graphql/schema";
-import { authors, createAuthor } from "./src/graphql/resolvers";
 import path from "path";
+import {
+	blogs,
+	createBlog,
+	blog,
+	updateBlog,
+	deleteBlog,
+	createComment,
+	deleteComment,
+	replyComment,
+	author,
+	authors,
+	createAuthor,
+} from "./src/graphql/resolvers";
 
 require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
 
@@ -18,6 +30,15 @@ app.use(
 		rootValue: {
 			authors,
 			createAuthor,
+			author,
+			blogs,
+			createBlog,
+			blog,
+			updateBlog,
+			deleteBlog,
+			createComment,
+			deleteComment,
+			replyComment,
 		},
 		graphiql: true,
 	})
