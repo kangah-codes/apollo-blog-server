@@ -1,6 +1,6 @@
 import { Env } from "./src/util/config";
 import mongoose from "mongoose";
-import express from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import { graphqlHTTP } from "express-graphql";
 import graphqlSchema from "./src/graphql/schema";
 import path from "path";
@@ -22,7 +22,7 @@ import {
 
 require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
 
-const app: express.Application = express();
+const app: Application = express();
 const env = Env(process.env);
 
 app.use(
@@ -47,6 +47,12 @@ app.use(
 		graphiql: true,
 	})
 );
+
+// error handling middleware
+app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+	console.error(err.stack);
+	res.status(500).send("Something broke!");
+});
 
 app.listen(3000, () => {
 	console.log("Example app listening on port 3000!");
