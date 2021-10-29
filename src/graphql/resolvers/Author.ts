@@ -23,7 +23,7 @@ export const createAuthor = async (args: {
 }) => {
 	const { name, email, date, about, avatar } = args.input;
 	const location = avatar
-		? await imageUpload(avatar, `authors/${email}`)
+		? await imageUpload(avatar, `authors/${email}`) // upload image with the author's email address as the filename
 		: "https://apollo-blog-server.sfo3.digitaloceanspaces.com/authors/avatar.png";
 
 	const author = new Author({
