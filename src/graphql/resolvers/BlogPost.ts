@@ -64,9 +64,7 @@ export const blogs = async () => {
 export const createBlog = async (args) => {
 	const { title, content, date, banner, author } = args.input;
 	const slug = urlSlug(title);
-	const blogBanner = banner
-		? await imageUpload(banner, `blogs/${slug}`)
-		: null;
+	const blogBanner = await imageUpload(banner, `blogs/${slug}`);
 
 	const blog = new Blog({
 		title,
