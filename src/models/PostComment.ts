@@ -1,4 +1,4 @@
-import { IDocument } from "src/interfaces/db_interfaces";
+import { IBlog, IComment, IDocument } from "../interfaces/db_interfaces";
 import mongoose, {
 	Document,
 	Schema,
@@ -6,14 +6,6 @@ import mongoose, {
 	SchemaDefinitionProperty,
 	PopulatedDoc,
 } from "mongoose";
-import { IBlog } from "./BlogPost";
-
-export interface IComment extends Document, IDocument<IComment> {
-	name: string;
-	comment: string;
-	replies: Array<PopulatedDoc<IComment>>;
-	post: PopulatedDoc<IBlog>;
-}
 
 export const CommentSchema = new Schema<IComment>({
 	name: {
