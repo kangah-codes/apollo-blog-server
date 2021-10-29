@@ -103,6 +103,8 @@ export default buildSchema(`
         replyComment(input: CommentReply): Comment!
         deleteComment(id: ID!): Comment!
         createAuthor(input: AuthorInput): Author!
+        likeComment(id: ID!): Comment!
+        dislikeComment(id: ID!): Comment!
     }
 
     schema {
