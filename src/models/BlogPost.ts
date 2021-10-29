@@ -1,4 +1,4 @@
-import Author, { AuthorSchema, IAuthor } from "./Author";
+import Author, { AuthorSchema } from "./Author";
 import mongoose, {
 	Document,
 	Schema,
@@ -6,20 +6,7 @@ import mongoose, {
 	SchemaDefinitionProperty,
 	PopulatedDoc,
 } from "mongoose";
-import { IComment } from "./PostComment";
-import { IDocument } from "src/interfaces/db_interfaces";
-
-export interface IBlog extends Document, IDocument<IBlog> {
-	title: string;
-	content: string;
-	date: SchemaDefinitionProperty<Date>;
-	author: PopulatedDoc<IAuthor>;
-	comments: PopulatedDoc<IComment>;
-	likes: number;
-	dislikes: number;
-	banner: string;
-	slug: string;
-}
+import { IBlog, IDocument } from "../interfaces/db_interfaces";
 
 const BlogSchema = new Schema<IBlog>({
 	title: {
