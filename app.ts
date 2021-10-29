@@ -24,6 +24,7 @@ require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
 
 const app: Application = express();
 const env = Env(process.env);
+const PORT = process.env.PORT || 3000;
 
 app.use(
 	"/graphql",
@@ -54,7 +55,7 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 	res.status(500).send("Something broke!");
 });
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
 	console.log("Example app listening on port 3000!");
 
 	mongoose
