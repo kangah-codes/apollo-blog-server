@@ -59,3 +59,41 @@ export const replyComment = async (args) => {
 		id: result.id,
 	};
 };
+
+export const likeComment = async (args) => {
+	const { id } = args;
+
+	const result = await Comment.findByIdAndUpdate(id, {
+		$inc: {
+			likes: 1,
+		},
+	});
+
+	if (!result) {
+		throw new Error("Comment not found");
+	}
+
+	return {
+		...result._doc,
+		id: result.id,
+	};
+};
+
+export const dislikeComment = async (args) => {
+	const { id } = args;
+
+	const result = await Comment.findByIdAndUpdate(id, {
+		$inc: {
+			dislikes: 1,
+		},
+	});
+
+	if (!result) {
+		throw new Error("Comment not found");
+	}
+
+	return {
+		...result._doc,
+		id: result.id,
+	};
+};
