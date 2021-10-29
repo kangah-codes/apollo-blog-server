@@ -101,7 +101,7 @@ export const updateBlog = async (args) => {
 			banner,
 			likes,
 			dislikes,
-			slug: title ? urlSlug(title) : null,
+			...(title && { slug: urlSlug(title) }), // update the slug only when the blog title changes
 		},
 		{ new: true }
 	);
