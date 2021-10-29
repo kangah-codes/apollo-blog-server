@@ -37,7 +37,6 @@ const postComment = async (commentIds) => {
 		const comments = await Comment.find({ id: { $in: commentIds } });
 
 		return comments.map((comment) => {
-			console.log(comment);
 			return {
 				...comment._doc,
 				id: comment.id,
@@ -79,6 +78,10 @@ export const createBlog = async (args) => {
 	});
 
 	const result = await blog.save();
+
+	if (!result) {
+		throw new Error("Error creating blog post");
+	}
 
 	return {
 		...result._doc,
@@ -128,6 +131,7 @@ export const deleteBlog = async (args) => {
 };
 
 export const blog = async (args: { slug: string; id: string }) => {
+	// query for the blog post either by it's slug or by it's id
 	const { slug, id } = args;
 
 	if (!slug && !id) {
