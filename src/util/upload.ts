@@ -33,6 +33,8 @@ export const imageUpload = async (
 
 		return Location;
 	} catch (error) {
-		console.log(error, env.production.AWS_BUCKET, "apollo-blog-server");
+		throw new Error(
+			"Error parsing base64 image string, are you sure it's a valid string?"
+		);
 	}
 };
