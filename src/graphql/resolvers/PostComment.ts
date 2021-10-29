@@ -10,8 +10,15 @@ export const createComment = async (args) => {
 
 	const result = await postComment.save();
 
+	if (!result) {
+		throw new Error(
+			"Error while creating comment. Please try again later."
+		);
+	}
+
 	await Blog.findByIdAndUpdate(blog, {
 		$push: {
+			// @ts-ignore (Not sure why this is not working)
 			comments: result.id,
 		},
 	});
@@ -47,6 +54,12 @@ export const replyComment = async (args) => {
 	});
 
 	const result = await replyComment.save();
+
+	if (!result) {
+		throw new Error(
+			"Error while creating comment. Please try again later."
+		);
+	}
 
 	await Comment.findByIdAndUpdate(parentComment, {
 		$push: {
