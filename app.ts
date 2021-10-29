@@ -16,6 +16,8 @@ import {
 	author,
 	authors,
 	createAuthor,
+	likeComment,
+	dislikeComment,
 } from "./src/graphql/resolvers";
 
 require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
@@ -39,14 +41,12 @@ app.use(
 			createComment,
 			deleteComment,
 			replyComment,
+			likeComment,
+			dislikeComment,
 		},
 		graphiql: true,
 	})
 );
-
-app.get("/", (req, res) => {
-	res.send("Hello World!");
-});
 
 app.listen(3000, () => {
 	console.log("Example app listening on port 3000!");
