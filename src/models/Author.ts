@@ -1,6 +1,6 @@
 // create a mongoose model for a blog post author
 
-import { IAuthor, IDocument } from "src/interfaces/db_interfaces";
+import { IAuthor, IDocument } from "../interfaces/db_interfaces";
 import mongoose, {
 	Document,
 	Schema,
